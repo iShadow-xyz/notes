@@ -15,8 +15,11 @@ export async function PUT(
       { new: true }
     );
     return NextResponse.json(note);
-  } catch (error) {
-    return NextResponse.json({ error: "Error updating note" }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error.message || "Error updating note" },
+      { status: 500 }
+    );
   }
 }
 
@@ -28,7 +31,10 @@ export async function DELETE(
     await connectDB();
     await Note.findByIdAndDelete(params.id);
     return NextResponse.json({ message: "Note deleted successfully" });
-  } catch (error) {
-    return NextResponse.json({ error: "Error deleting note" }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error.message || "Error deleting note" },
+      { status: 500 }
+    );
   }
 }
