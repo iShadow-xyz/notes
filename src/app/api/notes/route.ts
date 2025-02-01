@@ -7,9 +7,9 @@ export async function GET() {
     await connectDB();
     const notes = await Note.find({}).sort({ createdAt: -1 });
     return NextResponse.json(notes);
-  } catch (error: any) {
+  } catch (_error: any) {
     return NextResponse.json(
-      { error: error.message || "Error fetching notes" },
+      { error: _error.message || "Error fetching notes" },
       { status: 500 }
     );
   }
@@ -21,9 +21,9 @@ export async function POST(request: Request) {
     const { title, content } = await request.json();
     const note = await Note.create({ title, content });
     return NextResponse.json(note);
-  } catch (error: any) {
+  } catch (_error: any) {
     return NextResponse.json(
-      { error: error.message || "Error creating note" },
+      { error: _error.message || "Error creating note" },
       { status: 500 }
     );
   }
